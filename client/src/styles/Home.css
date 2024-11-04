@@ -1,0 +1,33 @@
+.home-container {
+  padding-top: 2rem;
+}
+
+.hero-section {
+  background-color: #f8f9fa;
+  padding: 4rem 0;
+  margin-bottom: 3rem;
+}
+
+.hero-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.categories-section {
+  padding: 4rem 0;
+}
+
+.category-card {
+  transition: transform 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+}
+
+.featured-section {
+  padding: 4rem 0;
+  background-color: #f8f9fa;
+}
