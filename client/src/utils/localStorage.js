@@ -1,30 +1,40 @@
-export const getSavedBookIds = () => {
-  const savedBookIds = localStorage.getItem('saved_books')
-    ? JSON.parse(localStorage.getItem('saved_books'))
-    : [];
+const { GraphQLError } = require('graphql');
+const jwt = require('jsonwebtoken');
 
-  return savedBookIds;
-};
+const secret = 'mysecretsshhhhh';
+const expiration = '2h';
 
-export const saveBookIds = (bookIdArr) => {
-  if (bookIdArr.length) {
-    localStorage.setItem('saved_books', JSON.stringify(bookIdArr));
-  } else {
-    localStorage.removeItem('saved_books');
-  }
-};
+module.exports = {
+  AuthenticationError: new GraphQLError('Could not authenticate user.', {
+    extensions: {
+      code: 'UNAUTHENTICATED',
+    },
+  }),
+  authMiddleware: function ({ req }) {
+    // allows token to be sent via req.body, req.query, or headers
+    let token = req.body.token || req.query.token || req.headers.authorization;
 
-export const removeBookId = (bookId) => {
-  const savedBookIds = localStorage.getItem('saved_books')
-    ? JSON.parse(localStorage.getItem('saved_books'))
-    : null;
+    // ["Bearer", "<tokenvalue>"]
+    if (req.headers.authorization) {
+      token = token.split(' ').pop().trim();
+    }
 
-  if (!savedBookIds) {
-    return false;
-  }
+    if (!token) {
+      return req;
+    }
 
-  const updatedSavedBookIds = savedBookIds?.filter((savedBookId) => savedBookId !== bookId);
-  localStorage.setItem('saved_books', JSON.stringify(updatedSavedBookIds));
+    try {
+      const { data } = jwt.verify(token, secret, { maxAge: expiration });
+      req.user = data;
+    } catch {
+      console.log('Invalid token');
+    }
 
-  return true;
+    return req;
+  },
+  signToken: function ({ firstName, email, _id }) {
+    const payload = { firstName, email, _id };
+
+    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  },
 };
