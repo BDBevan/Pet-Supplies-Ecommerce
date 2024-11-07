@@ -1,34 +1,20 @@
-const User = require('./User');
+const mongoose = require('mongoose');
 
-module.exports = { User };
+const { Schema } = mongoose;
 
-
-// models/Order.js
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
-
-class Order extends Model {}
-
-Order.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    order_date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
+const orderSchema = new Schema({
+  purchaseDate: {
+    type: Date,
+    default: Date.now
   },
-  {
-    sequelize,
-    timestamps: false,
-    freezeTableName: true,
-    underscored: true,
-    modelName: 'order',
-  }
-);
+  products: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Product'
+    }
+  ]
+});
+
+const Order = mongoose.model('Order', orderSchema);
 
 module.exports = Order;

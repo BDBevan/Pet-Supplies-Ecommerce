@@ -1,8 +1,10 @@
 // config/connection.js
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-mongoose.connect(
-  "mongodb+srv://bradleybevan:happy@booksaver.l4euo.mongodb.net/?retryWrites=true&w=majority&appName=BookSaver"
-);
+
+mongoose.connect(process.env.DATABASE_URL || 'mongodb://localhost:27017/petstore', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 module.exports = mongoose.connection;

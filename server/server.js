@@ -35,7 +35,7 @@ const startApolloServer = async () => {
     "/graphql",
     cors(), // Enable CORS specifically for GraphQL endpoint
     expressMiddleware(server, {
-      context: authMiddleware,
+      // context: authMiddleware,
     })
   );
 
