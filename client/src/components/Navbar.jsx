@@ -1,76 +1,89 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav, Container, Modal, Tab, Button } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  Container,
+  Modal,
+  Tab,
+  Button,
+  Form,
+} from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import Auth from "../utils/auth";
 
 const AppNavbar = () => {
-  // set modal display state
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <Navbar bg="light" variant="light" expand="lg" className="border-bottom">
-        <Container>
+      <Navbar bg="white" className="py-3 shadow-sm">
+        <Container
+          fluid
+          className="d-flex align-items-center justify-content-between"
+        >
+          {/* Logo Section */}
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
-              src="/paw-logo.png" // Add your logo image here
+              src="/images/pawk.avif"
               alt="Paw Kingdom"
-              height="30"
+              height="40"
               className="me-2"
             />
-            Paw Kingdom
+            <span className="fs-4 fw-bold">Paw Kingdom</span>
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbar" />
-          <Navbar.Collapse id="navbar">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/collections/dog">
-                Dogs
-              </Nav.Link>
-              <Nav.Link as={Link} to="/collections/cat">
-                Cats
-              </Nav.Link>
-            </Nav>
 
-            <Nav className="d-flex align-items-center">
-              {Auth.loggedIn() ? (
-                <>
-                  <Button
-                    as={Link}
-                    to="/account"
-                    variant="outline-primary"
-                    className="me-3"
-                  >
-                    My Account
-                  </Button>
-                  <Nav.Link onClick={Auth.logout} className="me-3">
-                    Logout
-                  </Nav.Link>
-                </>
-              ) : (
+          {/* Search Bar */}
+          {/* <Form className="w-25">
+            <Form.Control
+              type="search"
+              placeholder="Search for pet supplies..."
+              className="rounded-pill"
+            />
+          </Form> */}
+
+          {/* Auth/Cart Section */}
+          <div className="d-flex align-items-center gap-3">
+            {Auth.loggedIn() ? (
+              <>
                 <Button
+                  as={Link}
+                  to="/account"
                   variant="outline-primary"
-                  onClick={() => setShowModal(true)}
-                  className="me-3"
+                  className="rounded-pill"
                 >
-                  Login / Sign Up
+                  My Account
                 </Button>
-              )}
-              <Nav.Link
-                as={Link}
-                to="/cart"
-                className="position-relative d-flex align-items-center"
+                <Button
+                  variant="link"
+                  onClick={Auth.logout}
+                  className="text-decoration-none"
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="outline-primary"
+                onClick={() => setShowModal(true)}
+                className="rounded-pill"
               >
-                <FaShoppingCart size={20} />
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  0 {/* Replace with actual cart count */}
-                  <span className="visually-hidden">items in cart</span>
-                </span>
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
+                Login / Sign Up
+              </Button>
+            )}
+            <Nav.Link
+              as={Link}
+              to="/cart"
+              className="position-relative d-flex align-items-center"
+            >
+              <FaShoppingCart size={20} />
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                0<span className="visually-hidden">items in cart</span>
+              </span>
+            </Nav.Link>
+          </div>
         </Container>
       </Navbar>
 
