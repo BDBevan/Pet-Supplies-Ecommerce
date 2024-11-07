@@ -1,15 +1,25 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import LandingPage from "../components/LandingPage";
+import AppNavbar from "../components/Navbar";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const handleNavigate = (path) => {
-    window.location.href = path;
+    navigate(path);
   };
 
   const handleSearch = (query) => {
-    window.location.href = `/search?category=${encodeURIComponent(query)}`;
+    navigate(`/collections?search=${encodeURIComponent(query)}`);
   };
 
-  return <LandingPage onNavigate={handleNavigate} onSearch={handleSearch} />;
+  return (
+    <>
+      {/* <AppNavbar /> */}
+      <LandingPage onNavigate={handleNavigate} onSearch={handleSearch} />
+    </>
+  );
 };
 
 export default Home;
