@@ -20,16 +20,18 @@ const Collections = () => {
           <Col md={8}>
             <Form.Control
               type="search"
-              placeholder="Search products..."
+              placeholder="Search for pet supplies..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="mb-2 mb-md-0"
+              className="shadow-sm"
             />
           </Col>
           <Col md={4}>
             <Form.Select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
+              className="shadow-sm"
             >
               <option value="featured">Featured</option>
               <option value="price-asc">Price: Low to High</option>

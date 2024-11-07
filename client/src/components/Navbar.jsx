@@ -52,7 +52,7 @@ const AppNavbar = () => {
                   as={Link}
                   to="/account"
                   variant="outline-primary"
-                  className="rounded-pill"
+                  className="rounded-pill btn-custom-outline"
                 >
                   My Account
                 </Button>
@@ -68,7 +68,14 @@ const AppNavbar = () => {
               <Button
                 variant="outline-primary"
                 onClick={() => setShowModal(true)}
-                className="rounded-pill"
+                className="rounded-pill btn-custom-outline"
+                style={{
+                  color: "black",
+                  borderColor: "#2d3290",
+                  "&:hover": {
+                    backgroundColor: "#2d3290",
+                  },
+                }}
               >
                 Login / Sign Up
               </Button>
