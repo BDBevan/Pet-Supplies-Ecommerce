@@ -91,7 +91,9 @@ const resolvers = {
     addUser: async (parent, { username, email, password }) => {
       try {
         const user = await User.create({ username, email, password });
+        console.log("User created:", user);
         const token = signToken(user);
+        console.log(token);
         return { token, user };
       } catch (err) {
         console.error("Error creating user:", err);
