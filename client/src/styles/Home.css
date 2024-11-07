@@ -39,10 +39,10 @@
   border: 2px solid transparent;
 }
 
-.category-card:hover {
+/* .category-card:hover {
   transform: translateY(-5px);
-  border-color: #007bff;
-}
+  border-color: #2d3290;
+} */
 
 .category-icon {
   font-size: 4rem;

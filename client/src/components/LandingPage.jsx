@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Row, Col } from "react-bootstrap";
 
 const LandingPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/collections?search=${encodeURIComponent(searchQuery)}`);
+    if (searchTerm.trim()) {
+      navigate(`/collections?search=${encodeURIComponent(searchTerm)}`);
     }
   };
 
@@ -17,17 +17,19 @@ const LandingPage = () => {
     <div className="d-flex flex-column vh-100">
       {/* Search Bar */}
       <Container className="my-4">
-        <Form onSubmit={handleSearch} className="d-flex justify-content-center">
-          <Form.Group className="w-50">
-            <Form.Control
-              type="search"
-              placeholder="Search for pet supplies..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="rounded-pill"
-            />
-          </Form.Group>
-        </Form>
+        <Row className="justify-content-center">
+          <Col md={6} className="mx-auto">
+            <Form onSubmit={handleSearch}>
+              <Form.Control
+                type="search"
+                placeholder="Search for pet supplies..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="shadow-sm"
+              />
+            </Form>
+          </Col>
+        </Row>
       </Container>
 
       {/* Main Content - Full Height Split Sections */}
@@ -42,8 +44,13 @@ const LandingPage = () => {
           }}
         >
           <div className="position-absolute top-50 start-50 translate-middle text-center">
-            <h2 className="display-1 fw-bold text-primary mb-3">DOGS</h2>
-            <p className="fs-4 text-primary">
+            <div className="mb-4" style={{ fontSize: "120px" }}>
+              🐕
+            </div>
+            <h2 className="display-1 fw-bold mb-3" style={{ color: "#2d3290" }}>
+              DOGS
+            </h2>
+            <p className="fs-4 mb-3" style={{ color: "#2d3290" }}>
               Find supplies for your furry friend
             </p>
           </div>
@@ -59,8 +66,15 @@ const LandingPage = () => {
           }}
         >
           <div className="position-absolute top-50 start-50 translate-middle text-center">
-            <h2 className="display-1 fw-bold text-primary mb-3">CATS</h2>
-            <p className="fs-4 text-primary">Discover perfect cat supplies</p>
+            <div className="mb-4" style={{ fontSize: "120px" }}>
+              🐱
+            </div>
+            <h2 className="display-1 fw-bold mb-3" style={{ color: "#2d3290" }}>
+              CATS
+            </h2>
+            <p className="fs-4 mb-3" style={{ color: "#2d3290" }}>
+              Discover perfect cat supplies
+            </p>
           </div>
         </Link>
       </div>
