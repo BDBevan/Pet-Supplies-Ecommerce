@@ -1,5 +1,20 @@
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 body {
-  font-family: "Rubik", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 h1,
@@ -16,6 +31,31 @@ h6 {
   font-style: italic;
 }
 
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2d3290;
+  color: white;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.scroll-to-top:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+/* Add this to your existing App.css */
 .btn-custom-outline {
   color: #2d3290 !important;
   border-color: #2d3290 !important;
@@ -24,4 +64,9 @@ h6 {
 .btn-custom-outline:hover {
   color: white !important;
   background-color: #2d3290 !important;
+}
+
+footer {
+  margin-top: auto;
+  flex-shrink: 0;
 }
