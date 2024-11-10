@@ -19,6 +19,7 @@ const server = new ApolloServer({
     console.error("GraphQL Error:", error);
     return error;
   },
+  context: authMiddleware,
 });
 
 // Create a new instance of Apollo server with the GraphQL schema
