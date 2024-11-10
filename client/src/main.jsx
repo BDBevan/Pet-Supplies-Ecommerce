@@ -3,8 +3,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import App from "./App.jsx";
-// import SearchBooks from './pages/SearchBooks'
-// import SavedBooks from './pages/SavedBooks'
+import Collections from "./pages/Collections.jsx";
+import Home from "./pages/Home.jsx";
+import Account from "./pages/Account.jsx";
 
 const router = createBrowserRouter([
   {
@@ -14,11 +15,19 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        // element: <SearchBooks />
+        element: <Home />,
       },
       {
-        path: "/saved",
-        // element: <SavedBooks />
+        path: "collections",
+        element: <Collections />,
+      },
+      {
+        path: "collections/:category",
+        element: <Collections />,
+      },
+      {
+        path: "/account",
+        element: <Account />,
       },
     ],
   },
@@ -27,3 +36,4 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />
 );
+

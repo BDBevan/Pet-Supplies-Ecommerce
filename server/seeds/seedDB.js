@@ -1,4 +1,5 @@
 // seeders/seed.js
+
 const mongoose = require('mongoose');
 const Category = require('../models/Category');
 const Product = require('../models/Product');
@@ -16,6 +17,7 @@ const seedDatabase = async () => {
     await Product.deleteMany({});
 
     const categories = await Category.insertMany([
+
       { name: 'Food' },
       { name: 'Toys' },
       { name: 'Accessories' },
@@ -45,10 +47,14 @@ const seedDatabase = async () => {
       },
     ]);
 
+
+
     console.log('Database seeded!');
     process.exit(0);
+
   } catch (err) {
     console.error('Error seeding database:', err);
+
     process.exit(1);
   }
 };

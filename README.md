@@ -152,4 +152,8 @@ The URL of the deployed application.
 
 The URL of the GitHub repository, with a unique name and a README describing the project.
 
+## Deployed Application
+
+https://pet-supplies-ecommerce.onrender.com
+
 
