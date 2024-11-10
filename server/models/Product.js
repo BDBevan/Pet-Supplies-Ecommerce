@@ -1,21 +1,31 @@
 // models/Product.js
 const mongoose = require('mongoose');
 
+// models/Product.js
+const mongoose = require('mongoose');
+
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+  },
   price: {
     type: Number,
     required: true,
   },
+  stock: {
+    type: Number,
+    default: 10,
+  },
   category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category', // Ensure this matches your Category model
-    required: true,
+    ref: 'Category',
   },
 });
 
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;
+

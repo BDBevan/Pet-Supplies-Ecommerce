@@ -1,35 +1,54 @@
 // seeders/seed.js
-const mongoose = require('../config/connection');
+const mongoose = require('mongoose');
 const Category = require('../models/Category');
-const Product = require('../models/Product'); // Assuming you have a Product model
+const Product = require('../models/Product');
 
 const seedDatabase = async () => {
   try {
-    await mongoose;
+    await mongoose.connect('mongodb://localhost:27017/petstore', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
-    // Clear existing data
+    console.log('Connected to MongoDB');
+
     await Category.deleteMany({});
     await Product.deleteMany({});
 
-    // Create sample categories
     const categories = await Category.insertMany([
-      { name: 'Dog Supplies' },
-      { name: 'Cat Supplies' },
-      { name: 'Bird Supplies' },
+      { name: 'Food' },
+      { name: 'Toys' },
+      { name: 'Accessories' },
     ]);
-    console.log('Categories seeded:', categories);
 
-    // Create sample products (assuming you have a Product model)
     const products = await Product.insertMany([
-      { name: 'Dog Food', price: 25.99, category: categories[0]._id },
-      { name: 'Cat Litter', price: 15.99, category: categories[1]._id },
-      { name: 'Bird Seed', price: 10.99, category: categories[2]._id },
+      {
+        name: 'Premium Dog Food',
+        description: 'High-quality food for dogs.',
+        price: 29.99,
+        stock: 50,
+        category: categories[0]._id,
+      },
+      {
+        name: 'Cat Toy Mouse',
+        description: 'Fun toy for cats to chase and play with.',
+        price: 5.99,
+        stock: 100,
+        category: categories[1]._id,
+      },
+      {
+        name: 'Dog Collar',
+        description: 'Adjustable collar for dogs of all sizes.',
+        price: 15.99,
+        stock: 30,
+        category: categories[2]._id,
+      },
     ]);
-    console.log('Products seeded:', products);
 
+    console.log('Database seeded!');
     process.exit(0);
-  } catch (error) {
-    console.error('Error seeding database:', error);
+  } catch (err) {
+    console.error('Error seeding database:', err);
     process.exit(1);
   }
 };
