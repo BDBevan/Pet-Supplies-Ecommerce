@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Form, Row, Col } from "react-bootstrap";
+import "./LandingPage.css";
 
 const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,15 +36,8 @@ const LandingPage = () => {
       {/* Main Content - Full Height Split Sections */}
       <div className="flex-grow-1 d-flex">
         {/* Dogs Section */}
-        <Link
-          to="/collections/dog"
-          className="w-50 text-decoration-none position-relative"
-          style={{
-            background: "#f8f9fa",
-            overflow: "hidden",
-          }}
-        >
-          <div className="position-absolute top-50 start-50 translate-middle text-center">
+        <Link to="/collections/dog" className="category-section">
+          <div className="category-content position-absolute top-50 start-50 translate-middle text-center">
             <div className="mb-4" style={{ fontSize: "120px" }}>
               🐕
             </div>
@@ -57,15 +51,8 @@ const LandingPage = () => {
         </Link>
 
         {/* Cats Section */}
-        <Link
-          to="/collections/cat"
-          className="w-50 text-decoration-none position-relative"
-          style={{
-            background: "#f8f9fa",
-            overflow: "hidden",
-          }}
-        >
-          <div className="position-absolute top-50 start-50 translate-middle text-center">
+        <Link to="/collections/cat" className="category-section">
+          <div className="category-content position-absolute top-50 start-50 translate-middle text-center">
             <div className="mb-4" style={{ fontSize: "120px" }}>
               🐱
             </div>

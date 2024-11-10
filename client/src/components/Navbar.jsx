@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Nav,
@@ -13,13 +13,24 @@ import { FaShoppingCart } from "react-icons/fa";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import Auth from "../utils/auth";
+import "./Navbar.css";
 
 const AppNavbar = () => {
   const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/collections?search=${encodeURIComponent(searchTerm.trim())}`);
+      setSearchTerm(""); // Clear search after submission
+    }
+  };
 
   return (
     <>
-      <Navbar bg="white" className="py-3 shadow-sm">
+      <Navbar className="paw-pattern-bg py-3 shadow-sm">
         <Container
           fluid
           className="d-flex align-items-center justify-content-between"
@@ -34,15 +45,6 @@ const AppNavbar = () => {
             />
             <span className="fs-4 fw-bold">Paw Kingdom</span>
           </Navbar.Brand>
-
-          {/* Search Bar */}
-          {/* <Form className="w-25">
-            <Form.Control
-              type="search"
-              placeholder="Search for pet supplies..."
-              className="rounded-pill"
-            />
-          </Form> */}
 
           {/* Auth/Cart Section */}
           <div className="d-flex align-items-center gap-3">
@@ -100,6 +102,7 @@ const AppNavbar = () => {
         show={showModal}
         onHide={() => setShowModal(false)}
         aria-labelledby="signup-modal"
+        className="auth-modal"
       >
         <Tab.Container defaultActiveKey="login">
           <Modal.Header closeButton>

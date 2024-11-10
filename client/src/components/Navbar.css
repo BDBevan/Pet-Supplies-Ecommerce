@@ -1,0 +1,92 @@
+.paw-pattern-bg {
+  background-color: #8b8ccd;
+  background-image: url("/images/navbar.jpg");
+  /* background-repeat: repeat; */
+  background-size: 500px;
+  position: relative;
+}
+
+.paw-pattern-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.874);
+  pointer-events: none;
+}
+
+/* Make sure content stays above the background */
+.paw-pattern-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Add these new styles to your existing Navbar.css */
+.modal-content {
+  background-color: #8b8ccd;
+  background-image: url("/images/navbar.jpg");
+  background-size: 500px;
+  position: relative;
+}
+
+.modal-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.874);
+  pointer-events: none;
+}
+
+.modal-content > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Style the nav pills */
+.nav-pills .nav-link {
+  color: #2d3290;
+  background-color: transparent;
+  border: 1px solid #2d3290;
+  margin-right: 10px;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #2d3290;
+  color: white;
+}
+
+/* Style the submit buttons */
+.submit-btn {
+  background-color: #2d3290;
+  color: white;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.submit-btn:hover {
+  opacity: 0.9;
+}
+
+/* Style the modal header */
+.modal-header {
+  border-bottom: none;
+}
+
+/* Style the form inputs */
+.form-control {
+  border: 1px solid #2d3290;
+  border-radius: 5px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(45, 50, 144, 0.25);
+  border-color: #2d3290;
+}

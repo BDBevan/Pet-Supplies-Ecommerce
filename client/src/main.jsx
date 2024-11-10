@@ -6,9 +6,6 @@ import App from "./App.jsx";
 import Collections from "./pages/Collections.jsx";
 import Home from "./pages/Home.jsx";
 
-// import SearchBooks from './pages/SearchBooks'
-// import SavedBooks from './pages/SavedBooks'
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,10 +15,13 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
-        // element: <SearchBooks />
       },
       {
-        path: "/collections/:category",
+        path: "collections",
+        element: <Collections />,
+      },
+      {
+        path: "collections/:category",
         element: <Collections />,
       },
     ],
