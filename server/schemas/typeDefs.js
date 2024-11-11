@@ -22,19 +22,6 @@ const typeDefs = `
     user: User
   }
 
-  input BookInput {
-    authors: [String]
-    description: String!
-    title: String!
-    bookId: String!
-    image: String
-    link: String
-  }
-
-  type Query {
-    me: User
-  }
-
   type Category {
     _id: ID
     name: String
@@ -56,11 +43,24 @@ const typeDefs = `
     products: [Product]
   }
 
-    type Checkout {
+  type Checkout {
     session: ID
   }
 
-    input ProductInput {
+  type CheckoutSession {
+    sessionId: String!
+  }
+
+  input BookInput {
+    authors: [String]
+    description: String!
+    title: String!
+    bookId: String!
+    image: String
+    link: String
+  }
+
+  input ProductInput {
     _id: ID
     purchaseQuantity: Int
     name: String
@@ -68,8 +68,31 @@ const typeDefs = `
     price: Float
     quantity: Int
   }
-    
-    type Query {
+
+  input PriceDataInput {
+    currency: String!
+    product_data: ProductDataInput!
+    unit_amount: Int!
+  }
+
+  input ProductDataInput {
+    name: String!
+    images: [String!]
+  }
+
+  input CheckoutSessionInput {
+    lineItems: [CheckoutLineItemInput!]!
+    successUrl: String!
+    cancelUrl: String!
+  }
+
+  input CheckoutLineItemInput {
+    price_data: PriceDataInput!
+    quantity: Int!
+  }
+
+  type Query {
+    me: User
     categories: [Category]
     products(collection: String): [Product]
     product(_id: ID!): Product
@@ -81,7 +104,8 @@ const typeDefs = `
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-        addOrder(products: [ID]!): Order
+    addOrder(products: [ID]!): Order
+    createCheckoutSession(input: CheckoutSessionInput!): CheckoutSession!
   }
 `;
 
