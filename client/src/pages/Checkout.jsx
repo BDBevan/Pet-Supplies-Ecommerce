@@ -3,7 +3,7 @@ import { Container, Card, ListGroup, Row, Col, Image } from "react-bootstrap";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLazyQuery } from "@apollo/client";
 import { QUERY_CHECKOUT } from "../utils/queries";
-import "../../public/checkout.css";
+import "../styles/checkout.css";
 
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 
