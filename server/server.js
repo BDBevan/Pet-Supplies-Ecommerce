@@ -29,7 +29,7 @@ const startApolloServer = async () => {
   app.use(cors()); // Enable CORS for all routes
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
-  app.use(authMiddleware);
+  // app.use(authMiddleware);
 
   // Set up Apollo Server middleware
   app.use(
@@ -37,8 +37,8 @@ const startApolloServer = async () => {
     cors(), // Enable CORS specifically for GraphQL endpoint
     expressMiddleware(server, {
       context: ({ req }) => {
-        return { user: req.user } // to resolvers
-      }
+        return { user: req.user }; // to resolvers
+      },
     })
   );
 

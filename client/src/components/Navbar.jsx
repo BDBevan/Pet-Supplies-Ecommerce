@@ -15,7 +15,7 @@ import LoginForm from "./LoginForm";
 import Auth from "../utils/auth";
 import "./Navbar.css";
 
-const AppNavbar = () => {
+const AppNavbar = ({ cartCount }) => {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
@@ -89,7 +89,8 @@ const AppNavbar = () => {
             >
               <FaShoppingCart size={20} />
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                0<span className="visually-hidden">items in cart</span>
+                {cartCount}{" "}
+                <span className="visually-hidden">items in cart</span>
               </span>
             </Nav.Link>
           </div>

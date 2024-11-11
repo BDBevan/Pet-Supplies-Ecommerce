@@ -3,28 +3,28 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { FaArrowUp } from "react-icons/fa";
 import { products } from "../Stub";
+import { useOutletContext } from "react-router-dom";
+import "../styles/Collections.css";
 
 const Collections = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("featured");
   const { category } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { setCartItems, cartCount } = useOutletContext();
 
   const filteredProducts = category
     ? products.filter((product) => product.collections === category)
     : products;
 
-  // Get search query from URL when component mounts or URL changes
   useEffect(() => {
     const searchQuery = searchParams.get("search");
     if (searchQuery) {
       setSearchTerm(searchQuery);
-      // Here you would typically trigger your search functionality
       handleSearch(searchQuery);
     }
   }, [searchParams]);
 
-  // Handle local search
   const handleLocalSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
@@ -33,12 +33,8 @@ const Collections = () => {
     }
   };
 
-  // Function to handle search
   const handleSearch = (query) => {
-    // Implement your search logic here
-    // This could be a GraphQL query or API call
     console.log("Searching for:", query);
-    // Update your products display based on search results
   };
 
   const scrollToTop = () => {
@@ -77,55 +73,55 @@ const Collections = () => {
               </Form.Select>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <div className="text-center">
-                <p>
-                  {searchTerm
-                    ? `Showing results for "${searchTerm}"`
-                    : `Showing products for ${category || "all categories"}`}
-                </p>
-                <div className="bg-white p-4 rounded shadow-sm">
-                  <Row>
-                    {filteredProducts.map((product) => (
-                      <Col key={product.id} md={4} className="mb-4">
-                        <div className="product-card">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="img-fluid"
-                          />
-                          <h5 className="mt-2">{product.name}</h5>
-                          <p>{product.price}</p>
-                          <button
-                            onClick={() => {
-                              const cartItems =
-                                JSON.parse(localStorage.getItem("cartItems")) ||
-                                [];
-                              const existingProduct = cartItems.find(
-                                (item) => item.id === product.id
-                              );
-                              if (existingProduct) {
-                                existingProduct.quantity += 1;
-                              } else {
-                                cartItems.push({ ...product, quantity: 1 });
-                              }
-                              localStorage.setItem(
-                                "cartItems",
-                                JSON.stringify(cartItems)
-                              );
-                            }}
-                          >
-                            Add to Cart
-                          </button>
-                        </div>
-                      </Col>
-                    ))}
-                  </Row>
+
+          {/* Products Grid */}
+          <div className="products-container">
+            <h2 className="collection-header text-center">
+              {searchTerm
+                ? `Showing results for "${searchTerm}"`
+                : `Showing Products For ${category || "All Categories"}`}
+            </h2>
+            <div className="product-grid">
+              {filteredProducts.map((product) => (
+                <div key={product.id} className="product-card">
+                  <div className="product-image-container">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="product-image"
+                    />
+                  </div>
+                  <div className="product-details">
+                    <h5 className="product-title">{product.name}</h5>
+                    <p className="product-price">${product.price}</p>
+                    <button
+                      className="add-to-cart-button"
+                      onClick={() => {
+                        const cartItems =
+                          JSON.parse(localStorage.getItem("cartItems")) || [];
+                        const existingProduct = cartItems.find(
+                          (item) => item.id === product.id
+                        );
+                        if (existingProduct) {
+                          existingProduct.quantity += 1;
+                        } else {
+                          cartItems.push({ ...product, quantity: 1 });
+                        }
+                        localStorage.setItem(
+                          "cartItems",
+                          JSON.stringify(cartItems)
+                        );
+                        setCartItems(cartCount + 1);
+                        localStorage.setItem("counts", cartCount + 1);
+                      }}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
+              ))}
+            </div>
+          </div>
         </Container>
 
         {/* Scroll to Top Button */}

@@ -1,5 +1,5 @@
 const { GraphQLError } = require("graphql");
-const { User, Product } = require("../models");
+const { User, Product, Order } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
@@ -32,7 +32,9 @@ const resolvers = {
         return user.orders.id(_id);
       }
 
-      throw AuthenticationError;
+      throw new GraphQLError("Not logged in", {
+        extensions: { code: "UNAUTHENTICATED" },
+      });
     },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
@@ -54,11 +56,21 @@ const resolvers = {
           quantity: product.purchaseQuantity,
         });
       }
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items,
+        mode: "payment",
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${url}/cancel`,
+      });
+
+      return { session: session.id };
     },
     products: async (parent, { collection }) => {
-   const response = await Product.find({collection}).populate('category');
-   console.log(response) 
-      return response // await Product.find({collection}).populate('category');
+      const response = await Product.find({ collection }).populate("category");
+      console.log(response);
+      return response;
     },
   },
 
@@ -106,6 +118,40 @@ const resolvers = {
           extensions: { code: "BAD_USER_INPUT" },
         });
       }
+    },
+
+    createCheckoutSession: async (_, { input }) => {
+      try {
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ["card"],
+          line_items: input.lineItems,
+          mode: "payment",
+          success_url: input.successUrl,
+          cancel_url: input.cancelUrl,
+        });
+
+        return {
+          sessionId: session.id,
+        };
+      } catch (error) {
+        console.error("Stripe session creation error:", error);
+        throw new GraphQLError("Failed to create checkout session", {
+          extensions: { code: "INTERNAL_SERVER_ERROR" },
+        });
+      }
+    },
+
+    addOrder: async (parent, { products }, context) => {
+      if (context.user) {
+        const order = new Order({ products });
+        await User.findByIdAndUpdate(context.user._id, {
+          $push: { orders: order },
+        });
+        return order;
+      }
+      throw new GraphQLError("Not logged in", {
+        extensions: { code: "UNAUTHENTICATED" },
+      });
     },
   },
 };
