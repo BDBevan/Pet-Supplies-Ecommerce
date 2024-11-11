@@ -84,7 +84,7 @@ const AppNavbar = () => {
             )}
             <Nav.Link
               as={Link}
-              to="/cart"
+              to="/checkout"
               className="position-relative d-flex align-items-center"
             >
               <FaShoppingCart size={20} />

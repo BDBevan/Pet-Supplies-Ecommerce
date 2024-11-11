@@ -6,6 +6,7 @@ import App from "./App.jsx";
 import Collections from "./pages/Collections.jsx";
 import Home from "./pages/Home.jsx";
 import Account from "./pages/Account.jsx";
+import Checkout from "./pages/Checkout.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
         path: "/account",
         element: <Account />,
       },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+      },
     ],
   },
 ]);
@@ -36,4 +41,3 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />
 );
-
