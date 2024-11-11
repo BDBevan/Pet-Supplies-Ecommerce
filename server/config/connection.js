@@ -1,7 +1,8 @@
+// config/connection.js
 const mongoose = require("mongoose");
 
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/pawkingdom"
+  "mongodb+srv://bradleybevan:happy@booksaver.l4euo.mongodb.net/?retryWrites=true&w=majority&appName=BookSaver"
 );
 
 module.exports = mongoose.connection;

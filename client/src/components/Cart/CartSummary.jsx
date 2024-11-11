@@ -1,19 +1,23 @@
 import React from 'react';
 
-const CartSummary = ({ items, total }) => {
-    return (
-        <div className="cart-summary">
-            <h2>Cart Summary</h2>
-            <ul>
-                {items.map((item, index) => (
-                    <li key={index}>
-                        {item.name} - ${item.price} x {item.quantity}
-                    </li>
-                ))}
-            </ul>
-            <h3>Total: ${total}</h3>
-        </div>
-    );
+const CartSummary = ({ cartItems }) => {
+  const getTotalPrice = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+  };
+
+  return (
+    <div className="cart-summary">
+      <h2>Cart Summary</h2>
+      <ul>
+        {cartItems.map((item) => (
+          <li key={item.id}>
+            {item.name} x {item.quantity}: ${item.price * item.quantity}
+          </li>
+        ))}
+      </ul>
+      <h3>Total: ${getTotalPrice()}</h3>
+    </div>
+  );
 };
 
-export default CartSummary;
+export default CartSummary;</li>
