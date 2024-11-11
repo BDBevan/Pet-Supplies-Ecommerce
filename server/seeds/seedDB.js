@@ -5,7 +5,7 @@ const Product = require('../models/Product');
 
 const seedDatabase = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/petstore', {
+    await mongoose.connect('mongodb+srv://happy:happy@booksaver.l4euo.mongodb.net/pawkingdom?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -25,6 +25,7 @@ const seedDatabase = async () => {
       {
         name: 'Premium Dog Food',
         description: 'High-quality food for dogs.',
+        collection: 'dog',
         price: 29.99,
         stock: 50,
         category: categories[0]._id,
@@ -32,6 +33,7 @@ const seedDatabase = async () => {
       {
         name: 'Cat Toy Mouse',
         description: 'Fun toy for cats to chase and play with.',
+        collection: 'cat',
         price: 5.99,
         stock: 100,
         category: categories[1]._id,
@@ -39,6 +41,7 @@ const seedDatabase = async () => {
       {
         name: 'Dog Collar',
         description: 'Adjustable collar for dogs of all sizes.',
+        collection: 'dog',
         price: 15.99,
         stock: 30,
         category: categories[2]._id,

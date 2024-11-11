@@ -1,5 +1,5 @@
 const { GraphQLError } = require("graphql");
-const { User } = require("../models");
+const { User, Product } = require("../models");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
@@ -54,6 +54,11 @@ const resolvers = {
           quantity: product.purchaseQuantity,
         });
       }
+    },
+    products: async (parent, { collection }) => {
+   const response = await Product.find({collection}).populate('category');
+   console.log(response) 
+      return response // await Product.find({collection}).populate('category');
     },
   },
 
