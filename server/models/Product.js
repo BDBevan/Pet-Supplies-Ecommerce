@@ -1,5 +1,4 @@
-// models/Product.js
-const mongoose = require('mongoose');
+
 
 // models/Product.js
 const mongoose = require('mongoose');
@@ -11,6 +10,10 @@ const productSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+  },
+  collection: {
+    type: String,
+    required: true,
   },
   price: {
     type: Number,
