@@ -19,7 +19,6 @@ const server = new ApolloServer({
     console.error("GraphQL Error:", error);
     return error;
   },
-  context: authMiddleware,
 });
 
 // Create a new instance of Apollo server with the GraphQL schema
@@ -30,13 +29,16 @@ const startApolloServer = async () => {
   app.use(cors()); // Enable CORS for all routes
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+  app.use(authMiddleware);
 
   // Set up Apollo Server middleware
   app.use(
     "/graphql",
     cors(), // Enable CORS specifically for GraphQL endpoint
     expressMiddleware(server, {
-      // context: authMiddleware,
+      context: ({ req }) => {
+        return { user: req.user } // to resolvers
+      }
     })
   );
 

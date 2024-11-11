@@ -21,6 +21,9 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
+  address: {
+    type: String,
+  },
   orders: [Order.schema]
 });
 

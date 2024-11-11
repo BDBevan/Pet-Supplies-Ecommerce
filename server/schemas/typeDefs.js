@@ -3,6 +3,7 @@ const typeDefs = `
     _id: ID!
     username: String!
     email: String!
+    address: String
     bookCount: Int
     savedBooks: [Book]
   }
@@ -43,8 +44,8 @@ const typeDefs = `
     _id: ID
     name: String
     description: String
-    image: String
-    quantity: Int
+    collection: String
+    stock: Int
     price: Float
     category: Category
   }
@@ -70,7 +71,7 @@ const typeDefs = `
     
     type Query {
     categories: [Category]
-    products(category: ID, name: String): [Product]
+    products(collection: String): [Product]
     product(_id: ID!): Product
     user: User
     order(_id: ID!): Order
