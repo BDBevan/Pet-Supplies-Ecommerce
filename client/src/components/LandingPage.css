@@ -1,0 +1,35 @@
+.category-section {
+  position: relative;
+  overflow: hidden;
+  width: 50%;
+  text-decoration: none;
+  background: #f8f9fa;
+  transition: transform 0.3s ease;
+}
+
+.category-section::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  background-color: #2d3290;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.5s ease, height 0.5s ease, opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.category-section:hover::before {
+  width: 150%;
+  height: 150%;
+  opacity: 0.1;
+}
+
+.category-content {
+  position: relative;
+  z-index: 2;
+}
