@@ -63,15 +63,14 @@ npm run develop
    - Complete purchases
 
 ## 🚀 Deployment
-- [Deployed Application](https://pet-supplies-ecommerce.onrender.com)
-- [GitHub Repository]**update repo name to paw kingdom
+- [Deployed Application][(https://pet-supplies-ecommerce.onrender.com)](https://pet-supplies-ecommerce.onrender.com)
 
 
 ## 🖼️ Screenshots
 ![1](https://github.com/user-attachments/assets/78691607-01a6-4d92-be12-0fea01702cf9)
 ![2](https://github.com/user-attachments/assets/06930f97-7323-4567-abbb-7770b47f3ed4)
-![Shopping Cart](./client/public/images/shopping-cart.jpg)
-
+![Screenshot 2024-11-12 105541](https://github.com/user-attachments/assets/788c8208-2ef9-4451-bdf7-491f5ba97034)
+![Screenshot 2024-11-12 105752](https://github.com/user-attachments/assets/2ee26214-89ee-481c-8ad8-e4fdceabda89)
 
 ## 👥 Team
 - Bradley Bevan (Github: )
