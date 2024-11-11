@@ -12,6 +12,23 @@ const Collections = () => {
   const { category } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const { setCartItems, cartCount } = useOutletContext();
+  const [sortedProducts, setSortedProducts] = useState([]);
+  const [productQuantities, setProductQuantities] = useState({});
+  const handleQuantityChange = (productId, change) => {
+    setProductQuantities((prev) => {
+      const currentQty = prev[productId] || 0;
+      const newQty = Math.max(0, currentQty + change);
+      return { ...prev, [productId]: newQty };
+    });
+  };
+
+  // Initialize sorted products
+  useEffect(() => {
+    const filtered = category
+      ? products.filter((product) => product.collections === category)
+      : products;
+    setSortedProducts(filtered);
+  }, [category]);
 
   const filteredProducts = category
     ? products.filter((product) => product.collections === category)
@@ -35,6 +52,34 @@ const Collections = () => {
 
   const handleSearch = (query) => {
     console.log("Searching for:", query);
+    const filtered = filteredProducts.filter((product) =>
+      product.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setSortedProducts(filtered);
+  };
+
+  // Sort functionality
+  const handleSort = (e) => {
+    const value = e.target.value;
+    setSortBy(value);
+
+    let sorted = [...filteredProducts];
+
+    switch (value) {
+      case "price-asc":
+        sorted.sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        sorted.sort((a, b) => b.price - a.price);
+        break;
+      case "newest":
+        sorted.sort((a, b) => b.id - a.id);
+        break;
+      default:
+        sorted = filteredProducts;
+    }
+
+    setSortedProducts(sorted);
   };
 
   const scrollToTop = () => {
@@ -62,10 +107,7 @@ const Collections = () => {
               </Form>
             </Col>
             <Col md={4}>
-              <Form.Select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-              >
+              <Form.Select value={sortBy} onChange={handleSort}>
                 <option value="featured">Featured</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
@@ -82,7 +124,10 @@ const Collections = () => {
                 : `Showing Products For ${category || "All Categories"}`}
             </h2>
             <div className="product-grid">
-              {filteredProducts.map((product) => (
+              {(searchTerm || sortBy !== "featured"
+                ? sortedProducts
+                : filteredProducts
+              ).map((product) => (
                 <div key={product.id} className="product-card">
                   <div className="product-image-container">
                     <img
@@ -94,29 +139,94 @@ const Collections = () => {
                   <div className="product-details">
                     <h5 className="product-title">{product.name}</h5>
                     <p className="product-price">${product.price}</p>
-                    <button
-                      className="add-to-cart-button"
-                      onClick={() => {
-                        const cartItems =
-                          JSON.parse(localStorage.getItem("cartItems")) || [];
-                        const existingProduct = cartItems.find(
-                          (item) => item.id === product.id
-                        );
-                        if (existingProduct) {
-                          existingProduct.quantity += 1;
-                        } else {
-                          cartItems.push({ ...product, quantity: 1 });
-                        }
-                        localStorage.setItem(
-                          "cartItems",
-                          JSON.stringify(cartItems)
-                        );
-                        setCartItems(cartCount + 1);
-                        localStorage.setItem("counts", cartCount + 1);
-                      }}
-                    >
-                      Add to Cart
-                    </button>
+                    <div className="quantity-controls">
+                      {productQuantities[product.id] ? (
+                        <>
+                          <div className="d-flex align-items-center justify-content-center mb-2">
+                            <Button
+                              variant="outline-secondary"
+                              size="sm"
+                              onClick={() =>
+                                handleQuantityChange(product.id, -1)
+                              }
+                              className="quantity-btn"
+                            >
+                              -
+                            </Button>
+                            <span className="mx-2">
+                              {productQuantities[product.id]}
+                            </span>
+                            <Button
+                              variant="outline-secondary"
+                              size="sm"
+                              onClick={() =>
+                                handleQuantityChange(product.id, 1)
+                              }
+                              className="quantity-btn"
+                            >
+                              +
+                            </Button>
+                          </div>
+                          <button
+                            className="add-to-cart-button"
+                            onClick={() => {
+                              const cartItems =
+                                JSON.parse(localStorage.getItem("cartItems")) ||
+                                [];
+                              const existingProduct = cartItems.find(
+                                (item) => item.id === product.id
+                              );
+                              const quantity = productQuantities[product.id];
+                              if (existingProduct) {
+                                existingProduct.quantity += quantity;
+                              } else {
+                                cartItems.push({ ...product, quantity });
+                              }
+                              localStorage.setItem(
+                                "cartItems",
+                                JSON.stringify(cartItems)
+                              );
+                              setCartItems(cartCount + quantity);
+                              localStorage.setItem(
+                                "counts",
+                                cartCount + quantity
+                              );
+                              setProductQuantities((prev) => ({
+                                ...prev,
+                                [product.id]: 0,
+                              }));
+                            }}
+                          >
+                            Add to Cart
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          className="add-to-cart-button"
+                          onClick={() => {
+                            const cartItems =
+                              JSON.parse(localStorage.getItem("cartItems")) ||
+                              [];
+                            const existingProduct = cartItems.find(
+                              (item) => item.id === product.id
+                            );
+                            if (existingProduct) {
+                              existingProduct.quantity += 1;
+                            } else {
+                              cartItems.push({ ...product, quantity: 1 });
+                            }
+                            localStorage.setItem(
+                              "cartItems",
+                              JSON.stringify(cartItems)
+                            );
+                            setCartItems(cartCount + 1);
+                            localStorage.setItem("counts", cartCount + 1);
+                          }}
+                        >
+                          Add to Cart
+                        </button>
+                      )}
+                    </div>{" "}
                   </div>
                 </div>
               ))}
