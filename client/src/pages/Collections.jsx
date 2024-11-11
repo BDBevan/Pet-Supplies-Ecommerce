@@ -2,12 +2,17 @@ import { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { FaArrowUp } from "react-icons/fa";
+import { products } from "../Stub";
 
 const Collections = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("featured");
   const { category } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const filteredProducts = category
+    ? products.filter((product) => product.collections === category)
+    : products;
 
   // Get search query from URL when component mounts or URL changes
   useEffect(() => {
@@ -72,8 +77,6 @@ const Collections = () => {
               </Form.Select>
             </Col>
           </Row>
-
-          {/* Products Grid Placeholder */}
           <Row>
             <Col>
               <div className="text-center">
@@ -83,7 +86,42 @@ const Collections = () => {
                     : `Showing products for ${category || "all categories"}`}
                 </p>
                 <div className="bg-white p-4 rounded shadow-sm">
-                  Product grid will go here
+                  <Row>
+                    {filteredProducts.map((product) => (
+                      <Col key={product.id} md={4} className="mb-4">
+                        <div className="product-card">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="img-fluid"
+                          />
+                          <h5 className="mt-2">{product.name}</h5>
+                          <p>{product.price}</p>
+                          <button
+                            onClick={() => {
+                              const cartItems =
+                                JSON.parse(localStorage.getItem("cartItems")) ||
+                                [];
+                              const existingProduct = cartItems.find(
+                                (item) => item.id === product.id
+                              );
+                              if (existingProduct) {
+                                existingProduct.quantity += 1;
+                              } else {
+                                cartItems.push({ ...product, quantity: 1 });
+                              }
+                              localStorage.setItem(
+                                "cartItems",
+                                JSON.stringify(cartItems)
+                              );
+                            }}
+                          >
+                            Add to Cart
+                          </button>
+                        </div>
+                      </Col>
+                    ))}
+                  </Row>
                 </div>
               </div>
             </Col>
