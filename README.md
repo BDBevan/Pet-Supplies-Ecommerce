@@ -68,8 +68,8 @@ npm run develop
 
 
 ## 🖼️ Screenshots
-![Landing Page](./client/public/images/landing-page.jpg)
-![Product Page](./client/public/images/product-page.jpg)
+![1](https://github.com/user-attachments/assets/78691607-01a6-4d92-be12-0fea01702cf9)
+![2](https://github.com/user-attachments/assets/06930f97-7323-4567-abbb-7770b47f3ed4)
 ![Shopping Cart](./client/public/images/shopping-cart.jpg)
 
 
