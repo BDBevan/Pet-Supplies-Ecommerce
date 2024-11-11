@@ -1,6 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
-// import Auth from "../utils/auth";
+import Auth from "../utils/auth";
+import { ApolloClient, InMemoryCache, HttpLink,useQuery } from '@apollo/client';
+import { ME_QUERY } from "../utils/queries.js";
+const client = new ApolloClient({
+  link: new HttpLink({
+    uri: '/graphql',
+    headers: {
+      'Authorization': `Bearer your-token`, // 你的认证token
+      'Custom-Header': 'your-custom-value' // 其他自定义头部
+    }
+  }),
+  cache: new InMemoryCache(),
+});
 
 const Account = () => {
   const [userForm, setUserForm] = useState({
@@ -9,6 +21,24 @@ const Account = () => {
     password: "",
     confirmPassword: "",
   });
+
+  useEffect(() => {
+    client.query({
+      query: ME_QUERY,
+      context: {
+        headers: {
+          'Authorization': `Bearer ` + Auth.getToken(),
+        }
+      }
+    }).then(data => {
+      const user = data.data.me
+      console.log(data.data)
+      setUserForm(user)
+      console.log(userForm)
+    })
+  }, []);
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,10 +59,8 @@ const Account = () => {
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     type="text"
-                    value={userForm.name}
-                    onChange={(e) =>
-                      setUserForm({ ...userForm, name: e.target.value })
-                    }
+                    value={userForm.username}
+                    disabled
                   />
                 </Form.Group>
 
@@ -41,8 +69,17 @@ const Account = () => {
                   <Form.Control
                     type="email"
                     value={userForm.email}
+                    disabled
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Address</Form.Label>
+                  <Form.Control
+                    type="address"
+                    value={userForm.address}
                     onChange={(e) =>
-                      setUserForm({ ...userForm, email: e.target.value })
+                      setUserForm({ ...userForm, address: e.target.value })
                     }
                   />
                 </Form.Group>
@@ -85,3 +122,4 @@ const Account = () => {
 };
 
 export default Account;
+
