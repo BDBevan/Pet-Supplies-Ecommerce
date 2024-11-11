@@ -76,7 +76,7 @@ npm run develop
 ## 👥 Team
 - Bradley Bevan (Github: )
 - Jovana Vukovic (Github: Jovana667)
-- June Li (Github: )
+- June Li (Github: Lijujujune)
 - Lewis Johns  (Github: )
 
 ## 📝 License
