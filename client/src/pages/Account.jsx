@@ -7,8 +7,8 @@ const client = new ApolloClient({
   link: new HttpLink({
     uri: '/graphql',
     headers: {
-      'Authorization': `Bearer your-token`, // 你的认证token
-      'Custom-Header': 'your-custom-value' // 其他自定义头部
+      'Authorization': `Bearer your-token`, 
+      'Custom-Header': 'your-custom-value' 
     }
   }),
   cache: new InMemoryCache(),

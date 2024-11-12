@@ -29,7 +29,7 @@ const startApolloServer = async () => {
   app.use(cors()); // Enable CORS for all routes
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
-  // app.use(authMiddleware);
+  app.use(authMiddleware);
 
   // Set up Apollo Server middleware
   app.use(
