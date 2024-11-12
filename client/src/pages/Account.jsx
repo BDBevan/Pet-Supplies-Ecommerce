@@ -109,9 +109,13 @@ const Account = () => {
                   />
                 </Form.Group>
 
-                <Button type="submit" variant="primary">
+                <Button type="submit" variant="primary" nma>
                   Update Profile
                 </Button>
+
+                <Card.Header>
+                <h4 className="mb-0">Order History</h4>
+            </Card.Header>
               </Form>
             </Card.Body>
           </Card>
