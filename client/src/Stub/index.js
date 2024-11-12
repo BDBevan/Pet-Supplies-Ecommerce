@@ -216,7 +216,7 @@ export const products = [
     id: 31,
     name: "Cat Bed",
     price: 34.99,
-    image: "/images/CatBed.jpg",
+    image: "../client/public/images/CatBed.jpg",
     collections: "cat",
   },
   {
